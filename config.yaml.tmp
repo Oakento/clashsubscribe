@@ -1,0 +1,7 @@
+clash-template-path: ''
+clash-config-path: ''
+source:
+  -
+    name: ''
+    url: ''
+
