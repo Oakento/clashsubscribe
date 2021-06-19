@@ -36,11 +36,17 @@ async def main():
     with open(clash_template_path, 'r') as orif:
         new_conf = yaml.safe_load(orif)
     for download in download_list:
+        if download is None:
+            continue
         conf_dict = yaml.safe_load(download)
+        if not isinstance(conf_dict, dict) or conf_dict.get('proxies') is None:
+            continue
         new_conf['proxies'] += conf_dict['proxies']
         new_conf['proxy-groups'][0]['proxies'] += [proxy['name'] for proxy in conf_dict['proxies']]
     with open(clash_config_path, 'w') as newf:
         yaml.safe_dump(new_conf, newf, allow_unicode=True)
+        print('done.')
 
+if __name__ == '__main__':
+    asyncio.run(main())
 
-asyncio.run(main())
